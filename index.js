@@ -1,14 +1,9 @@
-function subarraySum(nums, k) {
-  const map = new Map();
-  map.set(0, 1);
-  let count = 0;
-  let sum = 0;
-  for (const num of nums) {
-    sum += num;
-    if (map.has(sum - k)) {
-      count += map.get(sum - k);
-    }
-    map.set(sum, (map.get(sum) || 0) + 1);
+function isSymmetric(root) {
+  if (!root) return true;
+  return isMirror(root.left, root.right);
+  function isMirror(left, right) {
+    if (!left && !right) return true;
+    if (!left || !right || left.val !== right.val) return false;
+    return isMirror(left.left, right.right) && isMirror(left.right, right.left);
   }
-  return count;
 }
