@@ -1,10 +1,15 @@
-function numSquares(n) {
-  const dp = new Array(n + 1).fill(Infinity);
-  dp[0] = 0;
-  for (let i = 1; i <= n; i++) {
-    for (let j = 1; j * j <= i; j++) {
-      dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
+function longestValidParentheses(s) {
+  if (s.length === 0) return 0;
+  let max = 0;
+  const dp = new Array(s.length).fill(0);
+  for (let i = 1; i < s.length; i++) {
+    if (s[i] === ")") {
+      if (s[i - 1] === "(") dp[i] = (i >= 2 ? dp[i - 2] : 0) + 2;
+      else if (i - dp[i - 1] > 0 && s[i - dp[i - 1] - 1] === "(")
+        dp[i] =
+          dp[i - 1] + (i - dp[i - 1] >= 2 ? dp[i - dp[i - 1] - 2] : 0) + 2;
+      max = Math.max(max, dp[i]);
     }
   }
-  return dp[n];
+  return max;
 }
